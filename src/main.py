@@ -1,3 +1,7 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+
 from config.config import FILE_PATH, TARGET, TEST_SIZE
 from models.adaboost import fit_ada_boost_model
 from models.all_models import fit_all_models
@@ -24,14 +28,18 @@ from utils.data_preprocessing import (
     reorder_columns,
 )
 from utils.utils import load_data
-from utils.visualisation import get_correlation_matrix, plot_heat_map, plot_pair_plot
+from utils.visualisation import (
+    get_correlation_matrix,
+    plot_heat_map,
+    plot_pair_plot,
+)
 
 
-if __name__ == "__main__":
-    # load the data
+def main() -> None:
+    # Load the data
     df = load_data(FILE_PATH)
 
-    # data preprocessing
+    # Data preprocessing
     print_dataframe_common_details(df)
 
     print_unique_values_of_columns(df, "sales")
@@ -45,9 +53,9 @@ if __name__ == "__main__":
     new_df = reorder_columns(new_df)
 
     # Exploratory Data Analysis
-    # get_correlation_matrix(new_df)
-    # plot_heat_map(new_df)
-    # plot_pair_plot(new_df)
+    get_correlation_matrix(new_df)
+    plot_heat_map(new_df)
+    plot_pair_plot(new_df)
 
     # Data Preparation for Machine Learning Models
     print_unique_values_of_columns(new_df, "department")
@@ -56,7 +64,6 @@ if __name__ == "__main__":
     categorical = ["department", "income"]
     new_df = perform_one_hot_encoding(new_df, categorical)
     print_dataframe_info(new_df)
-    # plot_pair_plot(new_df)
 
     X_train, X_test, y_train, y_test = split_data_into_train_test(
         new_df, TEST_SIZE, TARGET
@@ -66,7 +73,7 @@ if __name__ == "__main__":
 
     print_dataframe_common_details(df)
 
-    # model training and testing
+    # Model training and testing
     fit_ada_boost_model(X_train, X_test, y_train, y_test)
     fit_decision_tree_model(X_train, X_test, y_train, y_test)
     fit_knn_model(X_train, X_test, y_train, y_test)
@@ -77,3 +84,7 @@ if __name__ == "__main__":
     fit_random_forest_model(X_train, X_test, y_train, y_test)
     fit_SVC_model(X_train, X_test, y_train, y_test)
     fit_all_models(X_train, X_test, y_train, y_test)
+
+
+if __name__ == "__main__":
+    main()
