@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+workspace = {editable = true, path = "."}
 
 [dev-packages]
 

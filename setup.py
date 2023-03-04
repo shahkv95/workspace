@@ -18,3 +18,4 @@ setup(
     url='https://github.com/shahkv95/workspace',
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
+)
