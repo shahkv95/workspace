@@ -3,7 +3,7 @@ import numpy as np
 import seaborn as sns
 
 from config.config import FILE_PATH, TARGET, TEST_SIZE
-from models.adaboost import fit_ada_boost_model
+from models.adaboost import fit_adaboost_model
 from models.all_models import fit_all_models
 from models.decision_tree import fit_decision_tree_model
 from models.k_nearest_neighbors import fit_knn_model
@@ -12,7 +12,7 @@ from models.mlp import fit_mlp_classifier_model
 from models.naive_bayes import fit_naive_bayes_model
 from models.qda import fit_qda_model
 from models.random_forest import fit_random_forest_model
-from models.svc import fit_SVC_model
+from models.svc import fit_svc_model
 from utils.data_preparation import (
     get_standardized_data,
     perform_one_hot_encoding,
@@ -53,9 +53,9 @@ def main() -> None:
     new_df = reorder_columns(new_df)
 
     # Exploratory Data Analysis
-    get_correlation_matrix(new_df)
-    plot_heat_map(new_df)
-    plot_pair_plot(new_df)
+    # get_correlation_matrix(new_df)
+    # plot_heat_map(new_df)
+    # plot_pair_plot(new_df)
 
     # Data Preparation for Machine Learning Models
     print_unique_values_of_columns(new_df, "department")
@@ -74,16 +74,18 @@ def main() -> None:
     print_dataframe_common_details(df)
 
     # Model training and testing
-    fit_ada_boost_model(X_train, X_test, y_train, y_test)
-    fit_decision_tree_model(X_train, X_test, y_train, y_test)
-    fit_knn_model(X_train, X_test, y_train, y_test)
-    fit_logistic_regression_model(X_train, X_test, y_train, y_test)
-    fit_mlp_classifier_model(X_train, X_test, y_train, y_test)
-    fit_naive_bayes_model(X_train, X_test, y_train, y_test)
-    fit_qda_model(X_train, X_test, y_train, y_test)
-    fit_random_forest_model(X_train, X_test, y_train, y_test)
-    fit_SVC_model(X_train, X_test, y_train, y_test)
-    fit_all_models(X_train, X_test, y_train, y_test)
+    fit_adaboost_model(X_train, X_test, y_train, y_test, "adaboost_model")
+    fit_decision_tree_model(X_train, X_test, y_train, y_test, "decision_tree_model")
+    fit_knn_model(X_train, X_test, y_train, y_test, "k_nearest_neighbors_model")
+    fit_logistic_regression_model(
+        X_train, X_test, y_train, y_test, "logistic_regression_model"
+    )
+    fit_mlp_classifier_model(X_train, X_test, y_train, y_test, "mlp_classifier_model")
+    fit_naive_bayes_model(X_train, X_test, y_train, y_test, "naive_bayes_model")
+    fit_qda_model(X_train, X_test, y_train, y_test, "qda_model")
+    fit_random_forest_model(X_train, X_test, y_train, y_test, "random_forest_model")
+    fit_svc_model(X_train, X_test, y_train, y_test, "svc_model")
+    # fit_all_models(X_train, X_test, y_train, y_test)
 
 
 if __name__ == "__main__":
