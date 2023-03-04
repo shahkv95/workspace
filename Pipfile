@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 workspace = {editable = true, path = "."}
 pandas = "*"
+matplotlib = "*"
+seaborn = "*"
+sklearn = "*"
+scikit-learn = "*"
 
 [dev-packages]
 
