@@ -10,7 +10,7 @@ from models.qda import fit_qda_model
 from models.random_forest import fit_random_forest_model
 from models.svc import fit_SVC_model
 from utils.data_preparation import (
-    get_standardize_data,
+    get_standardized_data,
     perform_one_hot_encoding,
     split_data_into_train_test,
 )
@@ -45,9 +45,9 @@ if __name__ == "__main__":
     new_df = reorder_columns(new_df)
 
     # Exploratory Data Analysis
-    get_correlation_matrix(new_df)
-    plot_heat_map(new_df)
-    plot_pair_plot(new_df)
+    # get_correlation_matrix(new_df)
+    # plot_heat_map(new_df)
+    # plot_pair_plot(new_df)
 
     # Data Preparation for Machine Learning Models
     print_unique_values_of_columns(new_df, "department")
@@ -56,17 +56,17 @@ if __name__ == "__main__":
     categorical = ["department", "income"]
     new_df = perform_one_hot_encoding(new_df, categorical)
     print_dataframe_info(new_df)
-    plot_pair_plot(new_df)
+    # plot_pair_plot(new_df)
 
     X_train, X_test, y_train, y_test = split_data_into_train_test(
         new_df, TEST_SIZE, TARGET
     )
 
-    X_train, X_test = get_standardize_data(X_train, X_test)
+    X_train, X_test = get_standardized_data(X_train, X_test)
 
     print_dataframe_common_details(df)
 
-    # model training
+    # model training and testing
     fit_ada_boost_model(X_train, X_test, y_train, y_test)
     fit_decision_tree_model(X_train, X_test, y_train, y_test)
     fit_knn_model(X_train, X_test, y_train, y_test)
