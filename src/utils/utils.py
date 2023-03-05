@@ -1,4 +1,5 @@
 import os
+from matplotlib.figure import Figure
 import pandas as pd
 
 
@@ -9,7 +10,7 @@ def load_data(file_path: str) -> pd.DataFrame:
     return df
 
 
-def save_output_image(output_dir: str, fig, filename: str) -> None:
+def save_output_image(output_dir: str, fig: Figure, filename: str) -> None:
     output_dir = output_dir
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
