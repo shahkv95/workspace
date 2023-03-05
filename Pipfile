@@ -8,8 +8,8 @@ workspace = {editable = true, path = "."}
 pandas = "*"
 matplotlib = "*"
 seaborn = "*"
-sklearn = "*"
 scikit-learn = "*"
+pytest = "*"
 
 [dev-packages]
 
