@@ -2,6 +2,14 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
+from config.config import (
+    COR_MATRIX_FILE_NAME,
+    HEATMAP_FILE_NAME,
+    PAIR_PLOT_FILE_NAME,
+    VISUALIZATION_OUTPUT_DIR,
+)
+from utils.utils import save_output_image
+
 
 def get_correlation_matrix(df: pd.DataFrame, size: int = 10) -> None:
     """Returns the correlation matrix of the dataframe.
@@ -19,7 +27,8 @@ def get_correlation_matrix(df: pd.DataFrame, size: int = 10) -> None:
     fig.colorbar(cax)
     plt.xticks(range(len(corr.columns)), corr.columns, rotation="vertical")
     plt.yticks(range(len(corr.columns)), corr.columns)
-    plt.show()
+    # plt.show()
+    save_output_image(VISUALIZATION_OUTPUT_DIR, fig, COR_MATRIX_FILE_NAME)
 
 
 def plot_heat_map(df: pd.DataFrame) -> None:
@@ -31,8 +40,9 @@ def plot_heat_map(df: pd.DataFrame) -> None:
     Returns:
         None
     """
-    sns.heatmap(df.corr(), annot=True, fmt=".1g", linewidths=3, linecolor="black")
-    plt.show()
+    fig = sns.heatmap(df.corr(), annot=True, fmt=".1g", linewidths=3, linecolor="black")
+    # plt.show()
+    save_output_image(VISUALIZATION_OUTPUT_DIR, fig.get_figure(), HEATMAP_FILE_NAME)
 
 
 def plot_pair_plot(df: pd.DataFrame) -> None:
@@ -44,5 +54,6 @@ def plot_pair_plot(df: pd.DataFrame) -> None:
     Returns:
         None
     """
-    sns.pairplot(df)
-    plt.show()
+    fig = sns.pairplot(df)
+    # plt.show()
+    save_output_image(VISUALIZATION_OUTPUT_DIR, fig, PAIR_PLOT_FILE_NAME)

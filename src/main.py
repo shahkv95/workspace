@@ -56,9 +56,9 @@ def main() -> None:
     new_df = reorder_columns(new_df)
 
     # Exploratory Data Analysis
-    # get_correlation_matrix(new_df)
-    # plot_heat_map(new_df)
-    # plot_pair_plot(new_df)
+    get_correlation_matrix(new_df)
+    plot_heat_map(new_df)
+    plot_pair_plot(new_df)
 
     # Data Preparation for Machine Learning Models
     print_unique_values_of_columns(new_df, "department")
