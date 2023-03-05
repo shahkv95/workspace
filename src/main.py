@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import seaborn as sns
 
 from config.config import FILE_PATH, TARGET, TEST_DATA_FILE, TEST_SIZE
 from models.adaboost import fit_adaboost_model
@@ -35,65 +34,85 @@ from utils.visualisation import (
     plot_pair_plot,
 )
 
+import logging
+import sys
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] %(levelname)s: %(message)s",
+    handlers=[
+        logging.StreamHandler(sys.stdout),
+        logging.FileHandler("log_file.log"),
+    ],
+)
+
+logger = logging.getLogger(__name__)
+
 
 def main() -> None:
-    np.random.seed(42)  # set random seed
+    try:
+        np.random.seed(42)  # set random seed
 
-    # Load the data
-    df = load_data(FILE_PATH)
+        # Load the data
+        df = load_data(FILE_PATH)
 
-    # Data preprocessing
-    print_dataframe_common_details(df)
+        # Data preprocessing
+        logger.info("Printing common details of the data...")
+        print_dataframe_common_details(df)
 
-    print_unique_values_of_columns(df, "sales")
-    print_unique_values_of_columns(df, "salary")
+        print_unique_values_of_columns(df, "sales")
+        print_unique_values_of_columns(df, "salary")
 
-    columns = get_columns()
+        columns = get_columns()
 
-    print_columns_null_details(df, columns)
+        print_columns_null_details(df, columns)
 
-    new_df = rename_columns(df)
-    new_df = reorder_columns(new_df)
+        new_df = rename_columns(df)
+        new_df = reorder_columns(new_df)
 
-    # Exploratory Data Analysis
-    get_correlation_matrix(new_df)
-    plot_heat_map(new_df)
-    plot_pair_plot(new_df)
+        # Exploratory Data Analysis
+        get_correlation_matrix(new_df)
+        plot_heat_map(new_df)
+        plot_pair_plot(new_df)
 
-    # Data Preparation for Machine Learning Models
-    print_unique_values_of_columns(new_df, "department")
-    print_unique_values_of_columns(new_df, "income")
+        # Data Preparation for Machine Learning Models
+        print_unique_values_of_columns(new_df, "department")
+        print_unique_values_of_columns(new_df, "income")
 
-    categorical = ["department", "income"]
-    new_df = perform_one_hot_encoding(new_df, categorical)
-    ohe_train_columns = new_df.columns
-    print_dataframe_info(new_df)
+        categorical = ["department", "income"]
+        new_df = perform_one_hot_encoding(new_df, categorical)
+        ohe_train_columns = new_df.columns
+        print_dataframe_info(new_df)
 
-    X_train, X_test, y_train, y_test = split_data_into_train_test(
-        new_df, TEST_SIZE, TARGET
-    )
+        X_train, X_test, y_train, y_test = split_data_into_train_test(
+            new_df, TEST_SIZE, TARGET
+        )
 
-    X_train, X_test = get_standardized_data(X_train, X_test)
+        X_train, X_test = get_standardized_data(X_train, X_test)
 
-    print_dataframe_common_details(df)
+        print_dataframe_common_details(df)
 
-    # Model training and testing on training data
-    fit_adaboost_model(X_train, X_test, y_train, y_test, "adaboost_model")
-    fit_decision_tree_model(X_train, X_test, y_train, y_test, "decision_tree_model")
-    fit_knn_model(X_train, X_test, y_train, y_test, "k_nearest_neighbors_model")
-    fit_logistic_regression_model(
-        X_train, X_test, y_train, y_test, "logistic_regression_model"
-    )
-    fit_mlp_classifier_model(X_train, X_test, y_train, y_test, "mlp_classifier_model")
-    fit_naive_bayes_model(X_train, X_test, y_train, y_test, "naive_bayes_model")
-    fit_qda_model(X_train, X_test, y_train, y_test, "qda_model")
-    fit_random_forest_model(X_train, X_test, y_train, y_test, "random_forest_model")
-    fit_svc_model(X_train, X_test, y_train, y_test, "svc_model")
-    fit_all_models(X_train, X_test, y_train, y_test)
+        # Model training and testing on training data
+        fit_adaboost_model(X_train, X_test, y_train, y_test, "adaboost_model")
+        fit_decision_tree_model(X_train, X_test, y_train, y_test, "decision_tree_model")
+        fit_knn_model(X_train, X_test, y_train, y_test, "k_nearest_neighbors_model")
+        fit_logistic_regression_model(
+            X_train, X_test, y_train, y_test, "logistic_regression_model"
+        )
+        fit_mlp_classifier_model(
+            X_train, X_test, y_train, y_test, "mlp_classifier_model"
+        )
+        fit_naive_bayes_model(X_train, X_test, y_train, y_test, "naive_bayes_model")
+        fit_qda_model(X_train, X_test, y_train, y_test, "qda_model")
+        fit_random_forest_model(X_train, X_test, y_train, y_test, "random_forest_model")
+        fit_svc_model(X_train, X_test, y_train, y_test, "svc_model")
+        fit_all_models(X_train, X_test, y_train, y_test)
 
-    # Model testing on testing dataset - predictions
-    test_data_file = TEST_DATA_FILE
-    predict_on_test_data(ohe_train_columns, test_data_file)
+        # Model testing on testing dataset - predictions
+        test_data_file = TEST_DATA_FILE
+        predict_on_test_data(ohe_train_columns, test_data_file)
+    except Exception as e:
+        logger.exception("Error occurred")
 
 
 if __name__ == "__main__":
