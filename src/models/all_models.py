@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
@@ -100,4 +101,16 @@ def fit_all_models(
     ax.set_xlabel("Model")
     ax.set_ylabel("Score")
     ax.legend()
-    plt.show()
+    # plt.show()
+
+    output_dir = "src/output"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    # save the plot in the output directory
+    fig.savefig(os.path.join(output_dir, "performance_metrics.png"))
+
+    # show a message to the user indicating the file location
+    print(
+        f"\nPlot saved at: {os.path.abspath(os.path.join(output_dir, 'performance_metrics.png'))}\n"
+    )
