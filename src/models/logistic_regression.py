@@ -32,4 +32,4 @@ def fit_logistic_regression_model(
     )
     os.makedirs(model_weights_dir, exist_ok=True)
     weights_file_path = os.path.join(model_weights_dir, f"{model_name}_weights.joblib")
-    joblib.dump(model.coef_, weights_file_path)
+    joblib.dump(model, weights_file_path)
