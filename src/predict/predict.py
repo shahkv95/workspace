@@ -11,9 +11,7 @@ from joblib import dump, load
 from utils.utils import load_data
 
 
-def predict_on_test_data(
-    ohe_train_columns: pd.Series, test_data_file: str
-) -> List[int]:
+def predict_on_test_data(ohe_train_columns: pd.Series, test_data_file: str) -> None:
     # Load test data
     test_data = load_data(test_data_file)
 
@@ -39,24 +37,29 @@ def predict_on_test_data(
 
     MODELS = get_list_of_models()
 
-    # Get user's desired model
-    print("Choose a model to predict with: ")
-    for i, model_name in enumerate(MODELS.keys()):
-        print(f"{i+1}: {model_name}")
-    model_choice = int(input("Enter the number of the model you want to use: "))
+    while True:
+        # Get user's desired model
+        print("Choose a model to predict with: ")
+        for i, model_name in enumerate(MODELS.keys()):
+            print(f"{i+1}: {model_name}")
+        model_choice = int(input("Enter the number of the model you want to use: "))
 
-    selected_model_name = list(MODELS.keys())[model_choice - 1]
+        selected_model_name = list(MODELS.keys())[model_choice - 1]
 
-    # selected_model = MODELS[selected_model_name]
+        model_weights_path = os.path.join(
+            "src",
+            "models",
+            "model_weights",
+            f"{selected_model_name}_model_weights.joblib",
+        )
 
-    # Check if weights for selected model exist, if not, train the model and save its weights
-    model_weights_path = os.path.join(
-        "src", "models", "model_weights", f"{selected_model_name}_model_weights.joblib"
-    )
+        if os.path.exists(model_weights_path):
+            model = load(model_weights_path)
 
-    if os.path.exists(model_weights_path):
-        model = load(model_weights_path)
+        # Predict on test data
+        predictions = model.predict(test_data)
+        print(f"Prediction using {selected_model_name}: {predictions.tolist()}")
 
-    # Predict on test data
-    predictions = model.predict(test_data)
-    return predictions.tolist()
+        user_choice = input("Do you want to predict again? (y/n) ")
+        if user_choice.lower() == "n":
+            break

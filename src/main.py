@@ -93,8 +93,7 @@ def main() -> None:
 
     # Model testing on testing dataset - predictions
     test_data_file = TEST_DATA_FILE
-    predictions = predict_on_test_data(ohe_train_columns, test_data_file)
-    print(predictions)
+    predict_on_test_data(ohe_train_columns, test_data_file)
 
 
 if __name__ == "__main__":
