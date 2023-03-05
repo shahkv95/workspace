@@ -4,6 +4,7 @@ import joblib
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
 import numpy as np
+from evaluate.evaluate_model_metrics import evaluate_model_metrics
 
 from utils.utils import save_model_weights
 
@@ -39,14 +40,8 @@ def fit_qda_model(
 
         predictions = model.predict(X_test)
 
-        accuracy = accuracy_score(y_test, predictions)
-        logging.info(f"\nAccuracy: {accuracy:.2%}")
-
-        cm = confusion_matrix(y_test, predictions)
-        logging.info(f"\nConfusion Matrix:\n{cm}")
-
-        report = classification_report(y_test, predictions)
-        logging.info(f"\nClassification Report:\n{report}")
+        # Calculate and log evaluation metrics for a model.
+        evaluate_model_metrics(y_test, predictions)
 
         # Save model weights
         save_model_weights(model, model_name, __file__)
