@@ -37,6 +37,8 @@ from utils.visualisation import (
 
 
 def main() -> None:
+    np.random.seed(42)  # set random seed
+
     # Load the data
     df = load_data(FILE_PATH)
 

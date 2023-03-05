@@ -47,7 +47,7 @@ def predict_on_test_data(
 
     selected_model_name = list(MODELS.keys())[model_choice - 1]
 
-    selected_model = MODELS[selected_model_name]
+    # selected_model = MODELS[selected_model_name]
 
     # Check if weights for selected model exist, if not, train the model and save its weights
     model_weights_path = os.path.join(

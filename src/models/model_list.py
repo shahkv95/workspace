@@ -14,7 +14,7 @@ def get_list_of_models() -> Dict[str, Type]:
     MODELS: Dict[str, Type] = {
         "adaboost": AdaBoostClassifier,
         "decision_tree": DecisionTreeClassifier,
-        "k_nearest_neighbor": KNeighborsClassifier,
+        "k_nearest_neighbors": KNeighborsClassifier,
         "logistic_regression": LogisticRegression,
         "mlp": MLPClassifier,
         "naive_bayes": GaussianNB,
