@@ -16,6 +16,9 @@ from sklearn.metrics import (
     f1_score,
 )
 from typing import Tuple
+from config.config import ALL_MODELS_OUTPUT_DIR, ALL_MODELS_PERFORMANCE_IMAGE_NAME
+
+from utils.utils import save_output_image
 
 
 def fit_all_models(
@@ -103,14 +106,4 @@ def fit_all_models(
     ax.legend()
     # plt.show()
 
-    output_dir = "src/output"
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-
-    # save the plot in the output directory
-    fig.savefig(os.path.join(output_dir, "performance_metrics.png"))
-
-    # show a message to the user indicating the file location
-    print(
-        f"\nPlot saved at: {os.path.abspath(os.path.join(output_dir, 'performance_metrics.png'))}\n"
-    )
+    save_output_image(ALL_MODELS_OUTPUT_DIR, fig, ALL_MODELS_PERFORMANCE_IMAGE_NAME)

@@ -16,7 +16,7 @@ def get_list_of_models() -> Dict[str, Type]:
         "decision_tree": DecisionTreeClassifier,
         "k_nearest_neighbors": KNeighborsClassifier,
         "logistic_regression": LogisticRegression,
-        "mlp": MLPClassifier,
+        "mlp_classifier": MLPClassifier,
         "naive_bayes": GaussianNB,
         "qda": QuadraticDiscriminantAnalysis,
         "random_forest": RandomForestClassifier,
