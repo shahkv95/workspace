@@ -6,6 +6,8 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
 
+from utils.utils import save_model_weights
+
 logging.basicConfig(level=logging.INFO)
 
 
@@ -45,14 +47,7 @@ def fit_random_forest_model(
         logging.info(f"\nClassification Report:\n{report}")
 
         # Save model weights
-        model_weights_dir = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), "model_weights"
-        )
-        os.makedirs(model_weights_dir, exist_ok=True)
-        weights_file_path = os.path.join(
-            model_weights_dir, f"{model_name}_weights.joblib"
-        )
-        joblib.dump(model, weights_file_path)
+        save_model_weights(model, model_name, __file__)
 
         feature_importances = pd.DataFrame(
             model.feature_importances_,

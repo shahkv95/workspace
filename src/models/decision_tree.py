@@ -5,6 +5,8 @@ import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
 
+from utils.utils import save_model_weights
+
 logging.basicConfig(level=logging.INFO)
 
 
@@ -46,14 +48,7 @@ def fit_decision_tree_model(
         logging.info(f"\nClassification Report:\n{report}")
 
         # Save model weights
-        model_weights_dir = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), "model_weights"
-        )
-        os.makedirs(model_weights_dir, exist_ok=True)
-        weights_file_path = os.path.join(
-            model_weights_dir, f"{model_name}_weights.joblib"
-        )
-        joblib.dump(model, weights_file_path)
+        save_model_weights(model, model_name, __file__)
 
     except Exception as e:
         logging.error("\nError occurred while fitting the decision tree model.")
