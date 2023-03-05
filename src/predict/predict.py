@@ -14,9 +14,7 @@ from joblib import dump, load
 from utils.utils import load_data
 
 logging.basicConfig(
-    filename="app.log",
     level=logging.DEBUG,
-    format="%(asctime)s:%(levelname)s:%(message)s",
 )
 
 
@@ -46,7 +44,9 @@ def predict_on_test_data(ohe_train_columns: pd.Series, test_data_file: str) -> N
             ]
         ]
 
-        logging.info("Appying one hot encoding and post data processing on test data\n")
+        logging.info(
+            "Applying one hot encoding and post data processing on test data\n"
+        )
         categorical = ["department", "income"]
         test_data = match_test_data_columns(ohe_train_columns, test_data, categorical)
 
@@ -83,6 +83,8 @@ def predict_on_test_data(ohe_train_columns: pd.Series, test_data_file: str) -> N
                 if os.path.exists(model_weights_path):
                     model = load(model_weights_path)
                 else:
+                    # Currently this step won't be executed as all the models are ran and the weights already exist
+                    # need to update this section when the choice of training the models will be made dynamic
                     logging.error(
                         f"Model weights not found for model: {selected_model_name}"
                     )
