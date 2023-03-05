@@ -1,10 +1,7 @@
 import logging
-import os
-import joblib
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
 from evaluate.evaluate_model_metrics import evaluate_model_metrics
 
 from utils.utils import save_model_weights

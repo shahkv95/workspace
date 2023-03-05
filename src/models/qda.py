@@ -1,8 +1,5 @@
 import logging
-import os
-import joblib
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
 import numpy as np
 from evaluate.evaluate_model_metrics import evaluate_model_metrics
 
