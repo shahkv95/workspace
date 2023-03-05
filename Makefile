@@ -5,8 +5,7 @@ help:
 	@echo "Available commands:"
 	@echo "  setup    - set up the project environment"
 	@echo "  test     - run unit tests"
-	@echo "  train    - train models"
-	@echo "  predict  - make predictions using trained models"
+	@echo "  run      - run application, train models, predict on test data"
 	@echo "  clean    - clean up build artifacts"
 
 # Set up the project environment using Pipenv
@@ -18,12 +17,8 @@ test:
 	pipenv run pytest
 
 # Train models
-train:
-	pipenv run python3 src/main.py train
-
-# Make predictions using trained models
-predict:
-	pipenv run python3 src/main.py predict
+run:
+	pipenv run python3 src/main.py 
 
 # Clean up build artifacts
 clean:
