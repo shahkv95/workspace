@@ -1,7 +1,27 @@
-.workspace.*
+# Compiled Python files
+__pycache__/
+*.py[cod]
 
-.workspace.egg-info/
+# Logs and databases
+*.log
+*.sqlite
+*.db
 
+# Packages and modules
+*.pyc
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Local development settings
+.env
+.vscode/
+.idea/
 .venv/
 
-.vscode/
+
+# Other
+.DS_Store
+Thumbs.db
+cSpell.json
