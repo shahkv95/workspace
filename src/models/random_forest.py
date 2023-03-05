@@ -1,32 +1,48 @@
-# Random forest
-import pandas as pd
+import logging
+import os
+import joblib
+import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
-from typing import Tuple
-import joblib
-import os
+
+logging.basicConfig(level=logging.INFO)
 
 
 def fit_random_forest_model(
-    X_train: Tuple, X_test: Tuple, y_train: Tuple, y_test: Tuple, model_name: str
+    X_train: np.ndarray,
+    X_test: np.ndarray,
+    y_train: np.ndarray,
+    y_test: np.ndarray,
+    model_name: str,
 ) -> None:
     """
-    Fit random forest model on the training set, make predictions on the test set, and print evaluation metrics.
-    """
-    print("\n================    RANDOM FOREST MODEL   ================\n")
+        Fit random forest classifier on the training set, make predictions on the test set, and print evaluation metrics.
+
+        Args:
+        X_train (np.ndarray): Training input features.
+        X_test (np.ndarray): Test input features.
+        y_train (np.ndarray): Training target labels.
+        y_test (np.ndarray): Test target labels.
+        model_name (str): Name of the model to be saved.
+
+    Returns:
+        None"""
+
+
+try:
+    logging.info("\n================    RANDOM FOREST MODEL   ================\n")
     model = RandomForestClassifier()
     model.fit(X_train, y_train)
 
     predictions = model.predict(X_test)
     accuracy = accuracy_score(y_test, predictions)
-
-    print(f"Accuracy: {accuracy:.2%}")
+    logging.info(f"\nAccuracy: {accuracy:.2%}")
 
     cm = confusion_matrix(y_test, predictions)
-    print(f"Confusion Matrix:\n{cm}")
+    logging.info(f"\nConfusion Matrix:\n{cm}")
 
     report = classification_report(y_test, predictions)
-    print(f"Classification Report:\n{report}")
+    logging.info(f"\nClassification Report:\n{report}")
 
     # Save model weights
     model_weights_dir = os.path.join(
@@ -42,5 +58,11 @@ def fit_random_forest_model(
         columns=["importance"],
     ).sort_values("importance", ascending=False)
 
-    print("========================    IMPORTANT_FEATURES    ========================")
-    print(feature_importances)
+    logging.info(
+        "\n========================    IMPORTANT_FEATURES    ========================"
+    )
+    logging.info(feature_importances)
+
+except Exception as e:
+    logging.error("\nError occurred while fitting the random forest model.")
+    logging.exception(e)

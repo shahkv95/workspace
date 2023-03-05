@@ -1,6 +1,5 @@
 import logging
 import os
-
 import joblib
 import numpy as np
 from sklearn.ensemble import AdaBoostClassifier
