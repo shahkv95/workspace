@@ -28,41 +28,42 @@ def fit_random_forest_model(
     Returns:
         None"""
 
+    try:
+        logging.info("\n================    RANDOM FOREST MODEL   ================\n")
+        model = RandomForestClassifier()
+        model.fit(X_train, y_train)
 
-try:
-    logging.info("\n================    RANDOM FOREST MODEL   ================\n")
-    model = RandomForestClassifier()
-    model.fit(X_train, y_train)
+        predictions = model.predict(X_test)
+        accuracy = accuracy_score(y_test, predictions)
+        logging.info(f"\nAccuracy: {accuracy:.2%}")
 
-    predictions = model.predict(X_test)
-    accuracy = accuracy_score(y_test, predictions)
-    logging.info(f"\nAccuracy: {accuracy:.2%}")
+        cm = confusion_matrix(y_test, predictions)
+        logging.info(f"\nConfusion Matrix:\n{cm}")
 
-    cm = confusion_matrix(y_test, predictions)
-    logging.info(f"\nConfusion Matrix:\n{cm}")
+        report = classification_report(y_test, predictions)
+        logging.info(f"\nClassification Report:\n{report}")
 
-    report = classification_report(y_test, predictions)
-    logging.info(f"\nClassification Report:\n{report}")
+        # Save model weights
+        model_weights_dir = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), "model_weights"
+        )
+        os.makedirs(model_weights_dir, exist_ok=True)
+        weights_file_path = os.path.join(
+            model_weights_dir, f"{model_name}_weights.joblib"
+        )
+        joblib.dump(model, weights_file_path)
 
-    # Save model weights
-    model_weights_dir = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "model_weights"
-    )
-    os.makedirs(model_weights_dir, exist_ok=True)
-    weights_file_path = os.path.join(model_weights_dir, f"{model_name}_weights.joblib")
-    joblib.dump(model, weights_file_path)
+        feature_importances = pd.DataFrame(
+            model.feature_importances_,
+            index=pd.DataFrame(X_train).columns,
+            columns=["importance"],
+        ).sort_values("importance", ascending=False)
 
-    feature_importances = pd.DataFrame(
-        model.feature_importances_,
-        index=pd.DataFrame(X_train).columns,
-        columns=["importance"],
-    ).sort_values("importance", ascending=False)
+        logging.info(
+            "\n========================    IMPORTANT_FEATURES    ========================"
+        )
+        logging.info(feature_importances)
 
-    logging.info(
-        "\n========================    IMPORTANT_FEATURES    ========================"
-    )
-    logging.info(feature_importances)
-
-except Exception as e:
-    logging.error("\nError occurred while fitting the random forest model.")
-    logging.exception(e)
+    except Exception as e:
+        logging.error("\nError occurred while fitting the random forest model.")
+        logging.exception(e)
