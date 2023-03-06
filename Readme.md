@@ -54,18 +54,18 @@ To set up this project, follow the steps below:
 5. Run the application
 
    ```bash
-   make run
+   $ make run
    ```
 
 6. To run all the test cases, run the following command
 
    ```bash
-   make test
+   $ make test
    ```
 
 7. To cleanup the environment, run the following command
    ```bash
-   make clean
+   $ make clean
    ```
 
 #
@@ -74,9 +74,15 @@ To set up this project, follow the steps below:
 
 If you encounter any issues while using the workspace project, try the following troubleshooting steps:
 
-1. Check your Python version: Make sure that you are using a compatible version of Python (e.g., Python 3.7 or higher). You can check your Python version by running `python3 --version` in your terminal.
+1. Check your Python version: Make sure that you are using a compatible version of Python (e.g., Python 3.7 or higher). You can check your Python version by running 
+   ```bash
+   $ python3 --version
+   ```
 
-2. Check your dependencies: Make sure that you have installed all the required dependencies listed in the Pipfile. You can install them by running `pipenv install --dev`.
+2. Check your dependencies: Make sure that you have installed all the required dependencies listed in the Pipfile. You can install them by running
+   ```bash
+   $ pipenv install --dev
+   ```
 
 3. Check your data: Make sure that your data is properly formatted and free of errors. Double-check that all the required columns are present and that the data is in the correct format.
 
